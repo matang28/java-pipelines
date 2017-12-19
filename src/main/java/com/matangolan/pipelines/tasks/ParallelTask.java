@@ -95,7 +95,6 @@ public abstract class ParallelTask<IN, OUT> extends TrackableTask<List<IN>,List<
 
     @Override
     public void onCompleted() {
-
         this.incrementProgress();
     }
 

@@ -42,7 +42,7 @@ public class EtlLoopFlowTest {
         AddOneTask task = new AddOneTask();
 
         for(int i=0;i<inputSize;i++){
-            assertEquals(task.run(loopList.get(i)), result.get(i));
+            assertEquals(task.wrappedRun(loopList.get(i)), result.get(i));
         }
     }
 

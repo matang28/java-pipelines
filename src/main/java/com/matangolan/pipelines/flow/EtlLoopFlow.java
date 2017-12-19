@@ -36,7 +36,7 @@ public class EtlLoopFlow<IN, OUT> implements IEtlLoopFlowNext<IN,OUT>, IEtlLoopF
         List<OUT> result = new ArrayList<>();
 
         for (IN input : this.inputList){
-            result.add(this.loopFlow.run(input));
+            result.add(this.loopFlow.wrappedRun(input));
         }
 
         return result;

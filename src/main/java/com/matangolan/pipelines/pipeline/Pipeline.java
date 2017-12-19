@@ -78,7 +78,7 @@ public class Pipeline<FIN,FOUT> implements IPipeline<FIN, FOUT> {
         for(ITask t : tasks){
 
             //Run the task and save the output of it:
-            out = t.run(in);
+            out = t.wrappedRun(in);
 
             //The input of the next task is the output of the current one:
             in = out;

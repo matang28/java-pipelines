@@ -15,6 +15,20 @@ public interface ITask<IN, OUT> {
      */
     OUT run(IN input);
 
+    default OUT wrappedRun(IN input){
+
+        beforeRun();
+
+        OUT result = run(input);
+
+        afterRun();
+
+        return result;
+    }
+
+    default void beforeRun(){}
+    default void afterRun(){}
+
     default String getName(){
         return this.getClass().getName();
     }

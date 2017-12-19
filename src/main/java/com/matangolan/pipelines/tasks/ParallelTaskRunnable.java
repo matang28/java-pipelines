@@ -49,7 +49,7 @@ public class ParallelTaskRunnable<IN, OUT> implements Runnable{
 
         try {
             //Run the task:
-            OUT result = this.getTask().run(this.getInput());
+            OUT result = this.getTask().wrappedRun(this.getInput());
 
             //Publish the result to the result queue:
             this.getQueue().put(result);

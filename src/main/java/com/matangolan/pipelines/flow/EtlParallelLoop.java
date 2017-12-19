@@ -35,6 +35,6 @@ public class EtlParallelLoop<IN,OUT> extends EtlLoopFlow<IN,OUT>{
     public List<OUT> run() {
         EtlParallelLoopTask<IN,OUT> parallelLoopTask = new EtlParallelLoopTask<>(this.parallelism, this.loopFlow);
         parallelLoopTask.setProgressListener(this.progressListener);
-        return parallelLoopTask.run(this.inputList);
+        return parallelLoopTask.wrappedRun(this.inputList);
     }
 }

@@ -29,7 +29,7 @@ public class ParallelWorkerRunnable<IN> implements Runnable {
         notifyStart();
 
         //Run the task:
-        this.getTask().run(this.getInput());
+        this.getTask().wrappedRun(this.getInput());
 
         notifyCompleted();
     }
