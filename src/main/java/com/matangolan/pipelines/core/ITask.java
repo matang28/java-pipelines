@@ -17,17 +17,17 @@ public interface ITask<IN, OUT> {
 
     default OUT wrappedRun(IN input){
 
-        beforeRun();
+        beforeRun(input);
 
         OUT result = run(input);
 
-        afterRun();
+        afterRun(result);
 
         return result;
     }
 
-    default void beforeRun(){}
-    default void afterRun(){}
+    default void beforeRun(IN input){}
+    default void afterRun(OUT output){}
 
     default String getName(){
         return this.getClass().getName();
