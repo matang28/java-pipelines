@@ -2,6 +2,16 @@ package com.matangolan.pipelines.tasks;
 
 import com.matangolan.pipelines.DummyTasksUtils;
 import com.matangolan.pipelines.core.ITask;
+import com.matangolan.pipelines.pipeline.Pipeline;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Matan on 20-Nov-16.
@@ -34,7 +44,7 @@ public class ParallelTaskTest {
     }
 
 
-    /*@Test
+    @Test
     public void test_single_threaded() throws Exception {
 
         //Arrange:
@@ -153,10 +163,30 @@ public class ParallelTaskTest {
 
     }
 
+    @Test
+    public void test_multi_threaded_with_zero_input() throws Exception{
+
+        //Arrange:
+        Integer parallelism = 10;
+        List<Integer> inputList = new ArrayList<>();
+        DummyClass dummyClass = new DummyClass(parallelism);
+
+        //Act:
+        List<Integer> result = Pipeline.start(dummyClass).run(inputList);
+
+        //Assert:
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
+
     private static List<Integer> createList(int items){
         List<Integer> list = new ArrayList<>();
-        LoopUtils.fromZeroTo(items, list::add);
+
+        for (int i=0;i<items;i++){
+            list.add(i);
+        }
+
         return list;
-    }*/
+    }
 
 }

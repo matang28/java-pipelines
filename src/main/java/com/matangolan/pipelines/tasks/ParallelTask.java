@@ -23,6 +23,7 @@ public abstract class ParallelTask<IN, OUT> extends TrackableTask<List<IN>,List<
 
     private ExecutorService executorService;
     private BlockingQueue<OUT> blockingQueue;
+    private CountDownLatch latch = null;
     private int parallelism = 0;
 
     public ParallelTask() {
@@ -59,12 +60,13 @@ public abstract class ParallelTask<IN, OUT> extends TrackableTask<List<IN>,List<
         if(null != input){
 
             this.setInputSize(input.size());
+            this.latch = new CountDownLatch(input.size());
 
             //For each item in the input collection:
             input.forEach(item->{
                 //Execute the task using the executor service:
                 this.getExecutorService().execute(
-                        new ParallelTaskRunnable<>(this.getTask(), item, this.getBlockingQueue(), this) //Create new runnable to wrap the task
+                        new ParallelTaskRunnable<>(this.getTask(), item, this.getBlockingQueue(), this, latch) //Create new runnable to wrap the task
                 );
             });
 
@@ -73,7 +75,9 @@ public abstract class ParallelTask<IN, OUT> extends TrackableTask<List<IN>,List<
 
             //Await for all tasks in the executor to finish:
             try {
-                this.getExecutorService().awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+                //this.getExecutorService().awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+                this.latch.await(Integer.MAX_VALUE, TimeUnit.SECONDS);
+                this.getExecutorService().shutdownNow();
             }
             catch (InterruptedException e) {
                 logger.error("Task execution was interrupted, Failed with exception", e);

@@ -1,10 +1,15 @@
 group 'com.matangolan'
-version '1.2'
+version '1.3'
 
 apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+sourceSets.main.scala.srcDir "src/main/java"
+sourceSets.main.java.srcDirs = []
 
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
@@ -22,6 +27,7 @@ repositories {
 }
 
 dependencies {
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
